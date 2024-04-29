@@ -1,6 +1,7 @@
-const baseUrl = "https://localhost:7013/api/InfoScreen"
-const importantInfoUrl = "https://localhost:7013/api/ImportantInfo"
-//const baseUrl = "https://infoscreenrk.azurewebsites.net/api/infoscreen"
+//const baseUrl = "https://localhost:7013/api/InfoScreen"
+//const importantInfoUrl = "https://localhost:7013/api/ImportantInfo"
+const baseUrl = "https://infoscreenrk.azurewebsites.net/api/infoscreen"
+const importantInfoUrl = "https://infoscreenrk.azurewebsites.net/api/ImportantInfo"
 
 const { createApp, ref } = Vue
 
