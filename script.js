@@ -12,10 +12,9 @@ createApp({
             newInfoScreen: { id: 0, date: "", time: "", room: "", title: ""},
             updateData: { id: null, date: null, time: null, room: null, title: null},
             deleteData: { id: null, date: null, time: null, room: null, title: null},
-            //importantInfo: '',
-            newImportantInfo: { id: 0, info: "" },
-            updateImportantInfo: { id: null, info: null },
-            deleteImportantInfo: { id: null },
+            importantInfo: '',
+            newImportantInfo: { info: "" },
+            updateImportantInfo: { info: "" },
 
             addMessage: "",
             updateMessage: "",
@@ -79,6 +78,7 @@ createApp({
             }
         },
 
+
         async deletePost() {
             const url = `${baseUrl}/${this.deleteData.id}`
             try {
@@ -93,45 +93,39 @@ createApp({
             }
         },
 
-        // Methods for handling important information
-        async addInfo() {
+        async fetchImportantInfo() {
             try {
-                const response = await axios.post(importantInfoUrl, this.newImportantInfo);
-                this.addMessage = "Vigtig information tilføjet";
+                const response = await axios.get(importantInfoUrl);
+                this.importantInfo = response.data.info;  // Ensure your backend sends 'info' as part of the response object
+            } catch (ex) {
+                console.error("Failed to fetch important info:", ex);
+            }
+        },
+
+        // Add or update important info
+        async addOrUpdateImportantInfo() {
+            try {
+                const response = await axios.post(importantInfoUrl, { info: this.newImportantInfo.info });
+                this.importantInfo = response.data.info;
+                this.addMessage = "Important info added/updated";
                 setTimeout(() => { this.addMessage = "" }, 2000);
-                this.newImportantInfo = { id: 0, info: "" },
-                this.getInfoScreen()
-            }
-            catch (ex) {
-                alert("Fejl ved tilføjelse af vigtig information.");
+                this.newImportantInfo.info = "";  // Reset the input model
+            } catch (ex) {
+                alert("Error adding/updating important info:", ex);
             }
         },
 
-        async updateInfo() {
+        // Delete important info
+        async deleteImportantInfo() {
             try {
-                const response = await axios.put(importantInfoUrl + '/1', this.updateImportantInfo); // Assuming ID is '1' for update
-                this.updateMessage = "Vigtig information opdateret";
-                setTimeout(() => { this.updateMessage = "" }, 2000);
-                this.getInfoScreen()
-            }
-            catch (ex) {
-                alert("Fejl ved opdatering af vigtig information.");
-            }
-        },
-
-        async deleteInfo() {
-            try {
-                const response = await axios.delete(importantInfoUrl + '/1'); // Assuming ID is '1' for deletion
-                this.deleteMessage = "Vigtig information slettet";
-                this.importantInfo = ''; // Clear the local model
+                await axios.delete(importantInfoUrl);
+                this.deleteMessage = "Important info deleted";
+                this.importantInfo = '';  // Clear the local model
                 setTimeout(() => { this.deleteMessage = "" }, 2000);
-                this.getInfoScreen()
-            }
-            catch (ex) {
-                alert("Fejl ved sletning af vigtig information.");
+            } catch (ex) {
+                alert("Error deleting important info:", ex);
             }
         },
-    
 
         //skriv måned på dansk
         currentDate() {
@@ -160,6 +154,7 @@ createApp({
         },
       },
     mounted() {
+        this.fetchImportantInfo();
         this.getInfoScreen();
     },
 

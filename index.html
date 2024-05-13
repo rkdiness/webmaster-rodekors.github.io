@@ -150,26 +150,24 @@
                         {{deleteMessage}}
                     </div>
                 </div>
+                <div class="inputImportantInfo">
+                    <p>Fjern besked ved at indtaste et mellemrum</p>
+                    <p style="font-weight: bold;">Vigtig Info</p>
+                    <input type="text" v-model="newImportantInfo.info" placeholder="Indtast Vigtig info"><br><br>
+                    <!-- Button to add or update important info (since it now uses the same method) -->
+                    <button v-on:click="addOrUpdateImportantInfo()" class="btn btn-success"><strong>Tilføj/opdater vigtig info</strong></button><br>
+                    <!-- <button v-on:click="deleteImportantInfo()" class="btn btn-danger">Delete Important Info</button> -->
+                    <br><br>
+                    
+                    <!-- Display area for important info -->
+                    <div id="text-overlay">
+                        <p>{{importantInfo}}</p>
+                    </div>
+                </div>
             </div>
         </div>
+        
     </div>
-    </div>
-
-    <div class="inputImportantInfo">
-        <p style="font-weight: bold;">Manage Important Info</p>
-        <input type="text" v-model="newImportantInfo.info" placeholder="Enter important info here"><br><br>
-        <!-- Buttons to add or update and delete important info -->
-        <button v-on:click="addImportantInfo()" class="btn btn-success"><strong>Add/Update Important Info</strong></button><br>
-        <button v-on:click="deleteImportantInfo()" class="btn btn-danger">Delete Important Info</button>
-        <br><br>
-    
-        <!-- Display area for important info -->
-        <div id="text-overlay">
-            <!-- <p>{{ importantInfo }}</p> -->
-            <p> </p>
-
-        </div>
     </div>
 </body>
-
 </html>
